@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,8 +57,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        HomeViewModel.HomeViewModelFactory factory = new HomeViewModel.HomeViewModelFactory();
-        mViewModel = ViewModelProviders.of(getActivity(), factory).get(HomeViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(HomeViewModel.class);
     }
 
     @Nullable
@@ -85,6 +85,9 @@ public class HomeFragment extends Fragment {
         });
 
         mMoviesRecyclerView = getView().findViewById(R.id.moviesRecyclerView);
+
+        configureRecyclerAdapter(getResources().getConfiguration().orientation);
+
         mMoviesRecyclerAdapter = new MoviesRecyclerAdapter();
         mMoviesRecyclerAdapter.addActionCallback(new MoviesRecyclerAdapter.ActionCallback() {
             @Override
@@ -107,8 +110,6 @@ public class HomeFragment extends Fragment {
     private void initViews() {
         mMoviesRecyclerView.setAdapter(mMoviesRecyclerAdapter);
 
-        boolean isPortrait = getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT;
-        mMoviesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), isPortrait ? GRID_COLUMNS_PORTRAIT : GRID_COLUMNS_LANDSCAPE));
         mMoviesRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -147,11 +148,23 @@ public class HomeFragment extends Fragment {
                 });
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        configureRecyclerAdapter(newConfig.orientation);
+    }
+
     private int getFloatingButtonMaxTranslation(int height) {
         return dpToPixel(FAB_DP) + height;
     }
 
     private int dpToPixel(int dp) {
         return (int) (dp * Resources.getSystem().getDisplayMetrics().density);
+    }
+
+    private void configureRecyclerAdapter(int orientation) {
+        boolean isPortrait = orientation == Configuration.ORIENTATION_PORTRAIT;
+        mMoviesRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), isPortrait ? GRID_COLUMNS_PORTRAIT : GRID_COLUMNS_LANDSCAPE));
     }
 }

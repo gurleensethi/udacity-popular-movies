@@ -43,13 +43,4 @@ public class HomeViewModel extends ViewModel {
         super.onCleared();
         Log.d("onCleared", "View Model cleared");
     }
-
-    public static class HomeViewModelFactory implements ViewModelProvider.Factory {
-        @SuppressWarnings("unchecked")
-        @NonNull
-        @Override
-        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new HomeViewModel();
-        }
-    }
 }
