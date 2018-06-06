@@ -1,5 +1,6 @@
 package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 
+import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -55,6 +56,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         initViews();
     }
 
+    @SuppressLint("CheckResult")
     private void initViews() {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar() != null) {
@@ -64,13 +66,18 @@ public class MovieDetailActivity extends AppCompatActivity {
         mToolbar.setTitleTextColor(Color.WHITE);
         mCollapsingToolbar.setTitleEnabled(false);
 
-        RequestOptions requestOptions = new RequestOptions();
+        RequestOptions backdropRequestOptions = new RequestOptions();
+        RequestOptions posterRequestOptions = new RequestOptions();
+        backdropRequestOptions.placeholder(R.drawable.ic_local_movies_white_24dp);
+        posterRequestOptions.placeholder(R.drawable.ic_play_arrow_grey_24dp);
+
         Glide.with(this)
-                .setDefaultRequestOptions(requestOptions)
+                .setDefaultRequestOptions(backdropRequestOptions)
                 .load(Helpers.buildBackdropImageUrl(MOVIE.getBackdropPath()))
                 .into(mBackdropImageView);
 
         Glide.with(this)
+                .setDefaultRequestOptions(posterRequestOptions)
                 .load(Helpers.buildImageUrl(MOVIE.getPosterPath()))
                 .into(mMovieImageView);
 

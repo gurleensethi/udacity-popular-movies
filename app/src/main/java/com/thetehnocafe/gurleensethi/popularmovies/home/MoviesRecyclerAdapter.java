@@ -1,5 +1,6 @@
 package com.thetehnocafe.gurleensethi.popularmovies.home;
 
+import android.annotation.SuppressLint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
@@ -75,14 +77,18 @@ public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAd
         }
     }
 
+    @SuppressLint("CheckResult")
     class ViewHolder extends BaseViewHolder implements View.OnClickListener {
         private final ImageView mPosterImageView;
         private final TextView mNameTextView;
         private final TextView mAverageVoteTextView;
+        private RequestOptions glideRequestOptions = new RequestOptions();
 
         ViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+
+            glideRequestOptions.placeholder(R.drawable.ic_play_arrow_grey_24dp);
 
             mPosterImageView = itemView.findViewById(R.id.movieImageView);
             mNameTextView = itemView.findViewById(R.id.nameTextView);
@@ -94,8 +100,10 @@ public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAd
             Movie movie = movies.get(position);
 
             Glide.with(mPosterImageView.getContext())
+                    .setDefaultRequestOptions(glideRequestOptions)
                     .load(Helpers.buildImageUrl(movie.getPosterPath()))
                     .into(mPosterImageView);
+
             mNameTextView.setText(movie.getOriginalTitle());
             mAverageVoteTextView.setText(String.valueOf(movie.getVoteAverage()));
         }
