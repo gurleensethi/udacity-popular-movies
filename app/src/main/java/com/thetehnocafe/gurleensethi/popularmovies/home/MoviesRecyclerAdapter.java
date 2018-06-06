@@ -1,0 +1,119 @@
+package com.thetehnocafe.gurleensethi.popularmovies.home;
+
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
+import com.facebook.shimmer.ShimmerFrameLayout;
+import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
+import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.R;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAdapter.BaseViewHolder> {
+
+    interface ActionCallback {
+        void onMovieClicked(Movie movie);
+    }
+
+    private List<Movie> movies = new ArrayList<>();
+    private ActionCallback mActionCallback;
+
+    @NonNull
+    @Override
+    public BaseViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false);
+        if (viewType == R.layout.item_recycler_movie) {
+            return new ViewHolder(view);
+        } else {
+            return new ShimmerViewHolder(view);
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        if (movies.get(position) == null) {
+            return R.layout.item_recycler_movie_shimmer;
+        } else {
+            return R.layout.item_recycler_movie;
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull BaseViewHolder holder, int position) {
+        if (holder instanceof ViewHolder) {
+            ((ViewHolder) holder).bindData(position);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return movies.size();
+    }
+
+    class BaseViewHolder extends RecyclerView.ViewHolder {
+        BaseViewHolder(View itemView) {
+            super(itemView);
+        }
+    }
+
+    class ShimmerViewHolder extends BaseViewHolder {
+        private final ShimmerFrameLayout shimmerFrameLayout;
+
+        ShimmerViewHolder(View itemView) {
+            super(itemView);
+            shimmerFrameLayout = itemView.findViewById(R.id.shimmerViewContainer);
+            shimmerFrameLayout.startShimmer();
+        }
+    }
+
+    class ViewHolder extends BaseViewHolder implements View.OnClickListener {
+        private final ImageView mPosterImageView;
+        private final TextView mNameTextView;
+        private final TextView mAverageVoteTextView;
+
+        ViewHolder(final View itemView) {
+            super(itemView);
+            itemView.setOnClickListener(this);
+
+            mPosterImageView = itemView.findViewById(R.id.movieImageView);
+            mNameTextView = itemView.findViewById(R.id.nameTextView);
+            mAverageVoteTextView = itemView.findViewById(R.id.averageRatingTextView);
+            itemView.setOnTouchListener(Helpers.buildAnimatedTouchListener(300));
+        }
+
+        void bindData(int position) {
+            Movie movie = movies.get(position);
+
+            Glide.with(mPosterImageView.getContext())
+                    .load(Helpers.buildImageUrl(movie.getPosterPath()))
+                    .into(mPosterImageView);
+            mNameTextView.setText(movie.getOriginalTitle());
+            mAverageVoteTextView.setText(String.valueOf(movie.getVoteAverage()));
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mActionCallback != null) {
+                mActionCallback.onMovieClicked(movies.get(getAdapterPosition()));
+            }
+        }
+    }
+
+    public void updateData(List<Movie> movies) {
+        this.movies = movies;
+        notifyDataSetChanged();
+    }
+
+    public void addActionCallback(ActionCallback actionCallback) {
+        this.mActionCallback = actionCallback;
+    }
+}
