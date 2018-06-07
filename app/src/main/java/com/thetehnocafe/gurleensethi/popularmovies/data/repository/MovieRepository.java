@@ -82,4 +82,8 @@ public class MovieRepository {
             }
         }.getAsLiveData();
     }
+
+    public LiveData<Movie> getMovie(long id) {
+        return movieDAO.getMovie(id);
+    }
 }

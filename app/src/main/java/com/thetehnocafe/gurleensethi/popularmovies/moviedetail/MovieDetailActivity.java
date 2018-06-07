@@ -1,8 +1,11 @@
 package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 
 import android.annotation.SuppressLint;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.graphics.Color;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -32,6 +35,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView mDescriptionTextView;
     private TextView mRatingTextView;
     private TextView mDateTextView;
+
+    private MovieDetailViewModel mViewModel;
 
     private void initViews() {
         setSupportActionBar(mToolbar);
@@ -68,9 +73,29 @@ public class MovieDetailActivity extends AppCompatActivity {
         mRatingTextView = findViewById(R.id.ratingsTextView);
         mDateTextView = findViewById(R.id.dateTextView);
 
+        initViewModel();
         initViews();
     }
 
+    private void initViewModel() {
+        MovieDetailViewModel.MovieDetailViewModelFactory factory = new MovieDetailViewModel.MovieDetailViewModelFactory(MOVIE_ID);
+        mViewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
+
+        mViewModel.getMovie()
+                .observe(this, new Observer<Movie>() {
+                    @Override
+                    public void onChanged(@Nullable Movie movie) {
+                        if (movie == null) {
+                            finish();
+                            return;
+                        }
+
+                        updateUI(movie);
+                    }
+                });
+    }
+
+    @SuppressLint("CheckResult")
     private void updateUI(Movie movie) {
         RequestOptions backdropRequestOptions = new RequestOptions();
         RequestOptions posterRequestOptions = new RequestOptions();
