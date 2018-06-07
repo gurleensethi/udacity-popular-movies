@@ -73,7 +73,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     private void saveAndReInit(final ApiResponse<RequestType> apiResponse) {
-        Log.d(TAG, "Saving Data");
         Observable.create(new ObservableOnSubscribe<Void>() {
             @Override
             public void subscribe(ObservableEmitter<Void> emitter) throws Exception {
@@ -101,7 +100,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                         result.addSource(loadFromDB(), new Observer<ResultType>() {
                             @Override
                             public void onChanged(@Nullable ResultType resultType) {
-                                Log.d(TAG, "Got data here");
                                 result.setValue(Resource.success(resultType));
                             }
                         });

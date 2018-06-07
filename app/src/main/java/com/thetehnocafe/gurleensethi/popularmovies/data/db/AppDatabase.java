@@ -8,8 +8,9 @@ import android.content.Context;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.converter.IntegerListConverter;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 
-@Database(entities = {Movie.class}, version = 1)
+@Database(entities = {Movie.class, MovieVideo.class}, version = 1)
 @TypeConverters({IntegerListConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
@@ -24,4 +25,6 @@ public abstract class AppDatabase extends RoomDatabase {
     }
 
     public abstract MovieDAO getMovieDAO();
+
+    public abstract MovieVideoDAO getMovieVideoDAO();
 }

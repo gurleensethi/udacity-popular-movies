@@ -18,7 +18,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
+import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
+
+import java.util.List;
 
 import butterknife.ButterKnife;
 
@@ -91,6 +95,14 @@ public class MovieDetailActivity extends AppCompatActivity {
                         }
 
                         updateUI(movie);
+                    }
+                });
+
+        mViewModel.getMovieVideoLiveData()
+                .observe(this, new Observer<Resource<List<MovieVideo>>>() {
+                    @Override
+                    public void onChanged(@Nullable Resource<List<MovieVideo>> listResource) {
+
                     }
                 });
     }

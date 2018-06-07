@@ -56,21 +56,6 @@ public class Movie {
     public Movie() {
     }
 
-    protected Movie(Parcel in) {
-        posterPath = in.readString();
-        adult = in.readByte() != 0;
-        overview = in.readString();
-        releaseData = in.readString();
-        id = in.readLong();
-        originalTitle = in.readString();
-        originalLanguage = in.readString();
-        title = in.readString();
-        backdropPath = in.readString();
-        voteCount = in.readInt();
-        video = in.readByte() != 0;
-        voteAverage = in.readFloat();
-    }
-
     public String getPosterPath() {
         return posterPath;
     }

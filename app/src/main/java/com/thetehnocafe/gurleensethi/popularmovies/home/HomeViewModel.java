@@ -20,7 +20,7 @@ public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<SortOption> sortOptionLiveData = new MutableLiveData<>();
 
-    private final MovieRepository movieRepository = new MovieRepository(NetworkService.getInstance().getTMDBApi(), AppDatabase.getInstance().getMovieDAO());
+    private final MovieRepository movieRepository = new MovieRepository(NetworkService.getInstance().getTMDBApi(), AppDatabase.getInstance());
 
     private final LiveData<Resource<List<Movie>>> movies = Transformations.switchMap(sortOptionLiveData, new Function<SortOption, LiveData<Resource<List<Movie>>>>() {
         @Override

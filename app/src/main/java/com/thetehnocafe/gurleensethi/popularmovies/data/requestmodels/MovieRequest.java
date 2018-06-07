@@ -1,4 +1,4 @@
-package com.thetehnocafe.gurleensethi.popularmovies.data;
+package com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -6,7 +6,7 @@ import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 
 import java.util.List;
 
-public class MovieResult {
+public class MovieRequest {
     @SerializedName("page")
     @Expose
     private int page;
