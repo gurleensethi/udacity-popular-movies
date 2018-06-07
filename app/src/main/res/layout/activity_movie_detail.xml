@@ -121,8 +121,7 @@
                 android:layout_marginTop="32dp"
                 android:text="@string/overview_underlined"
                 android:textColor="@android:color/white"
-                android:textSize="16sp"
-                android:textStyle="bold"
+                style="@style/DetailSectionHeadingTextView"
                 app:layout_constraintTop_toBottomOf="@id/movieImageView" />
 
             <TextView
@@ -132,10 +131,16 @@
                 android:layout_marginTop="4dp"
                 android:textColor="@color/grey_200"
                 android:textSize="14sp"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/overviewLabel"
                 tools:text="@tools:sample/lorem/random" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/DetailSectionHeadingTextView"
+                app:layout_constraintTop_toBottomOf="@id/descriptionTextView"
+                android:layout_marginTop="32dp"
+                android:text="@string/trailers_underlined"/>
 
         </android.support.constraint.ConstraintLayout>
 

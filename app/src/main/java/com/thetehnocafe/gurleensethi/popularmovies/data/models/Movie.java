@@ -1,5 +1,7 @@
-package com.thetehnocafe.gurleensethi.popularmovies.data;
+package com.thetehnocafe.gurleensethi.popularmovies.data.models;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -8,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+@Entity(tableName = "movie")
 public class Movie implements Parcelable {
     @SerializedName("poster_path")
     @Expose
@@ -21,6 +24,7 @@ public class Movie implements Parcelable {
     @SerializedName("release_date")
     @Expose
     private String releaseData;
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private long id;

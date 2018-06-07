@@ -6,7 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.thetehnocafe.gurleensethi.popularmovies.AppSecret;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 import com.thetehnocafe.gurleensethi.popularmovies.data.ApiResponse;
-import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.NetworkBoundResource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.MovieResult;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
@@ -27,6 +27,21 @@ public class MovieRepository {
 
     public LiveData<Resource<List<Movie>>> getMovies(final SortOption sortOption) {
         return new NetworkBoundResource<List<Movie>, MovieResult>() {
+
+            @Override
+            protected boolean shouldFetch(List<Movie> movies) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<List<Movie>> loadFromDB() {
+                return null;
+            }
+
+            @Override
+            protected void saveCallResponse(MovieResult item) {
+
+            }
 
             @Override
             public List<Movie> convert(MovieResult movieResult) {

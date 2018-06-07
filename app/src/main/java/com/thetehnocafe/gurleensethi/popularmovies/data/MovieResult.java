@@ -2,6 +2,7 @@ package com.thetehnocafe.gurleensethi.popularmovies.data;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 
 import java.util.List;
 

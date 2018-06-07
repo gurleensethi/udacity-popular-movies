@@ -8,13 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
-import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 
 import java.util.ArrayList;

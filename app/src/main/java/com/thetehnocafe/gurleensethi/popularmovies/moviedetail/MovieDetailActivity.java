@@ -15,7 +15,9 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
-import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
+
+import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
@@ -36,6 +38,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Helpers.setUpTransparentStatusBar(getWindow());
         setContentView(R.layout.activity_movie_detail);
+        ButterKnife.bind(this);
 
         MOVIE = getIntent().getParcelableExtra(EXTRA_MOVIE);
 

@@ -12,7 +12,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,7 @@ import android.view.ViewTreeObserver;
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
-import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.moviedetail.MovieDetailActivity;
 

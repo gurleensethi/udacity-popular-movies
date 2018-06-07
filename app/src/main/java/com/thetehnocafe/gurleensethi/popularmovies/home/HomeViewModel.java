@@ -5,12 +5,10 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Transformations;
 import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
-import com.thetehnocafe.gurleensethi.popularmovies.data.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.repository.MovieRepository;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.network.NetworkService;
