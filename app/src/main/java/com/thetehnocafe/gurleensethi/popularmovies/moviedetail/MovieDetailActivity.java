@@ -21,8 +21,8 @@ import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity {
 
-    public static final String EXTRA_MOVIE = "movie";
-    private Movie MOVIE;
+    public static final String EXTRA_MOVIE_ID = "movie";
+    private long MOVIE_ID;
 
     private ImageView mBackdropImageView;
     private ImageView mMovieImageView;
@@ -33,6 +33,18 @@ public class MovieDetailActivity extends AppCompatActivity {
     private TextView mRatingTextView;
     private TextView mDateTextView;
 
+    private void initViews() {
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mCollapsingToolbar.setTitleEnabled(false);
+
+    }
+
+    @SuppressLint("CheckResult")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +52,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movie_detail);
         ButterKnife.bind(this);
 
-        MOVIE = getIntent().getParcelableExtra(EXTRA_MOVIE);
+        MOVIE_ID = getIntent().getLongExtra(EXTRA_MOVIE_ID, 0);
 
-        if (MOVIE == null) {
+        if (MOVIE_ID == 0) {
             finish();
             return;
         }
@@ -59,16 +71,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         initViews();
     }
 
-    @SuppressLint("CheckResult")
-    private void initViews() {
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        }
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mCollapsingToolbar.setTitleEnabled(false);
-
+    private void updateUI(Movie movie) {
         RequestOptions backdropRequestOptions = new RequestOptions();
         RequestOptions posterRequestOptions = new RequestOptions();
         backdropRequestOptions.placeholder(R.drawable.ic_local_movies_white_24dp);
@@ -76,22 +79,22 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         Glide.with(this)
                 .setDefaultRequestOptions(backdropRequestOptions)
-                .load(Helpers.buildBackdropImageUrl(MOVIE.getBackdropPath()))
+                .load(Helpers.buildBackdropImageUrl(movie.getBackdropPath()))
                 .into(mBackdropImageView);
 
         Glide.with(this)
                 .setDefaultRequestOptions(posterRequestOptions)
-                .load(Helpers.buildImageUrl(MOVIE.getPosterPath()))
+                .load(Helpers.buildImageUrl(movie.getPosterPath()))
                 .into(mMovieImageView);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             mMovieImageView.setElevation(16f);
         }
 
-        mNameTextView.setText(MOVIE.getTitle());
-        mDescriptionTextView.setText(MOVIE.getOverview());
-        mRatingTextView.setText(String.valueOf(MOVIE.getVoteAverage()));
-        mDateTextView.setText(Helpers.convertReleaseDate(MOVIE.getReleaseData()));
+        mNameTextView.setText(movie.getTitle());
+        mDescriptionTextView.setText(movie.getOverview());
+        mRatingTextView.setText(String.valueOf(movie.getVoteAverage()));
+        mDateTextView.setText(Helpers.convertReleaseDate(movie.getReleaseData()));
     }
 
     @Override

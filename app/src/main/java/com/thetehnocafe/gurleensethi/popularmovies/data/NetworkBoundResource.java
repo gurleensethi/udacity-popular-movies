@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -15,7 +16,7 @@ import io.reactivex.schedulers.Schedulers;
 
 @SuppressWarnings({"unchecked", "ConstantConditions"})
 public abstract class NetworkBoundResource<ResultType, RequestType> {
-
+    private static final String TAG = NetworkBoundResource.class.getSimpleName();
     private final MediatorLiveData<Resource<ResultType>> result = new MediatorLiveData<>();
 
     public NetworkBoundResource() {
@@ -72,6 +73,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     }
 
     private void saveAndReInit(final ApiResponse<RequestType> apiResponse) {
+        Log.d(TAG, "Saving Data");
         Observable.create(new ObservableOnSubscribe<Void>() {
             @Override
             public void subscribe(ObservableEmitter<Void> emitter) throws Exception {
@@ -83,16 +85,15 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                 .subscribe(new io.reactivex.Observer<Void>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
                     public void onNext(Void aVoid) {
-
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        e.printStackTrace();
                     }
 
                     @Override
@@ -100,6 +101,7 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
                         result.addSource(loadFromDB(), new Observer<ResultType>() {
                             @Override
                             public void onChanged(@Nullable ResultType resultType) {
+                                Log.d(TAG, "Got data here");
                                 result.setValue(Resource.success(resultType));
                             }
                         });
@@ -112,8 +114,6 @@ public abstract class NetworkBoundResource<ResultType, RequestType> {
     protected abstract LiveData<ResultType> loadFromDB();
 
     protected abstract void saveCallResponse(RequestType item);
-
-    protected abstract ResultType convert(RequestType requestType);
 
     protected abstract LiveData<ApiResponse<RequestType>> createCall();
 

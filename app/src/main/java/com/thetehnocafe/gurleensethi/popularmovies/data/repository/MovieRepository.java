@@ -6,6 +6,7 @@ import android.arch.lifecycle.MutableLiveData;
 import com.thetehnocafe.gurleensethi.popularmovies.AppSecret;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 import com.thetehnocafe.gurleensethi.popularmovies.data.ApiResponse;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.MovieDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.NetworkBoundResource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.MovieResult;
@@ -20,9 +21,11 @@ import retrofit2.Response;
 
 public class MovieRepository {
     private final TMDBApi tmdbApi;
+    private final MovieDAO movieDAO;
 
-    public MovieRepository(TMDBApi tmdbApi) {
+    public MovieRepository(TMDBApi tmdbApi, MovieDAO movieDAO) {
         this.tmdbApi = tmdbApi;
+        this.movieDAO = movieDAO;
     }
 
     public LiveData<Resource<List<Movie>>> getMovies(final SortOption sortOption) {
@@ -35,17 +38,13 @@ public class MovieRepository {
 
             @Override
             protected LiveData<List<Movie>> loadFromDB() {
-                return null;
+                return movieDAO.getMovies();
             }
 
             @Override
             protected void saveCallResponse(MovieResult item) {
-
-            }
-
-            @Override
-            public List<Movie> convert(MovieResult movieResult) {
-                return movieResult.getResults();
+                movieDAO.deleteAllMovies();
+                movieDAO.insert(item.getResults());
             }
 
             @Override

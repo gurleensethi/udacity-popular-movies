@@ -11,7 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 
 @Entity(tableName = "movie")
-public class Movie implements Parcelable {
+public class Movie {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -70,39 +70,6 @@ public class Movie implements Parcelable {
         video = in.readByte() != 0;
         voteAverage = in.readFloat();
     }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(posterPath);
-        dest.writeByte((byte) (adult ? 1 : 0));
-        dest.writeString(overview);
-        dest.writeString(releaseData);
-        dest.writeLong(id);
-        dest.writeString(originalTitle);
-        dest.writeString(originalLanguage);
-        dest.writeString(title);
-        dest.writeString(backdropPath);
-        dest.writeInt(voteCount);
-        dest.writeByte((byte) (video ? 1 : 0));
-        dest.writeFloat(voteAverage);
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    public static final Creator<Movie> CREATOR = new Creator<Movie>() {
-        @Override
-        public Movie createFromParcel(Parcel in) {
-            return new Movie(in);
-        }
-
-        @Override
-        public Movie[] newArray(int size) {
-            return new Movie[size];
-        }
-    };
 
     public String getPosterPath() {
         return posterPath;

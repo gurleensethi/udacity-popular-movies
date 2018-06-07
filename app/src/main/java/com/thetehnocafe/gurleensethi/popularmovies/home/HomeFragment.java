@@ -92,7 +92,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onMovieClicked(Movie movie) {
                 Intent intent = new Intent(getContext(), MovieDetailActivity.class);
-                intent.putExtra(MovieDetailActivity.EXTRA_MOVIE, movie);
+                intent.putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movie.getId());
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.slide_in, android.R.anim.fade_out);
             }
