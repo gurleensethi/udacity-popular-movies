@@ -28,6 +28,10 @@ public class Helpers {
         return  "https://img.youtube.com/vi/" + key + "/0.jpg";
     }
 
+    public static String buildYoutubeURL(String key) {
+        return "https://www.youtube.com/watch?v=" + key;
+    }
+
     public static View.OnTouchListener buildAnimatedTouchListener() {
         return buildAnimatedTouchListener(DEFAULT_ANIMATION_DURATION);
     }

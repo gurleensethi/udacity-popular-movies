@@ -3,7 +3,9 @@ package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 import android.annotation.SuppressLint;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -90,7 +92,14 @@ public class MovieDetailActivity extends AppCompatActivity {
         mTrailersRecyclerAdapter = new TrailerRecyclerAdapter();
         mTrailersRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mTrailersRecyclerView.setAdapter(mTrailersRecyclerAdapter);
-
+        mTrailersRecyclerAdapter.addActionListener(new TrailerRecyclerAdapter.ActionListener() {
+            @Override
+            public void onVideoClicked(MovieVideo movieVideo) {
+                Intent intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(Helpers.buildYoutubeURL(movieVideo.getKey())));
+                startActivity(Intent.createChooser(intent, "View Trailer:"));
+            }
+        });
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})

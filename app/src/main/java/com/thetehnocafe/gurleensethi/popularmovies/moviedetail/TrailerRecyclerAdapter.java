@@ -22,7 +22,12 @@ import butterknife.ButterKnife;
 
 public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecyclerAdapter.ViewHolder> {
 
+    interface ActionListener {
+        void onVideoClicked(MovieVideo movieVideo);
+    }
+
     private List<MovieVideo> mVideos = new ArrayList<>();
+    private ActionListener mActionListener;
 
     @NonNull
     @Override
@@ -46,7 +51,11 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public void addActionListener(ActionListener actionListener) {
+        this.mActionListener = actionListener;
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         @BindView(R.id.shimmerLayout)
         ShimmerFrameLayout mShimmerLayout;
         @BindView(R.id.trailerPosterImageView)
@@ -56,6 +65,7 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
 
         ViewHolder(View itemView) {
             super(itemView);
+            itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
         }
 
@@ -66,7 +76,6 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
                 return;
             }
 
-            Log.d("TAG THIS", movieVideo.getKey());
             mShimmerLayout.setVisibility(View.GONE);
             mTrailerPosterImageView.setVisibility(View.VISIBLE);
             mPlayImageView.setVisibility(View.VISIBLE);
@@ -74,6 +83,13 @@ public class TrailerRecyclerAdapter extends RecyclerView.Adapter<TrailerRecycler
             Glide.with(itemView)
                     .load(Helpers.buildYouTubeThumbnailURL(movieVideo.getKey()))
                     .into(mTrailerPosterImageView);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (mActionListener != null) {
+                mActionListener.onVideoClicked(mVideos.get(getAdapterPosition()));
+            }
         }
     }
 }
