@@ -160,6 +160,9 @@ public class MovieRepository {
 
             @Override
             protected void saveCallResponse(MovieReviewsRequest item) {
+                for(MovieReview review : item.getReviews()) {
+                    review.setMovieId(movieId);
+                }
                 movieReviewDAO.deleteAllReviews(movieId);
                 movieReviewDAO.insert(item.getReviews());
             }

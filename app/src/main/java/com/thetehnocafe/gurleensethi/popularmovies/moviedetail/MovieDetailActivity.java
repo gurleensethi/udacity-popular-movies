@@ -58,9 +58,12 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView mDateTextView;
     @BindView(R.id.trailersRecyclerView)
     RecyclerView mTrailersRecyclerView;
+    @BindView(R.id.reviewsRecyclerView)
+    RecyclerView mReviewsRecyclerView;
 
     private MovieDetailViewModel mViewModel;
     private TrailerRecyclerAdapter mTrailersRecyclerAdapter;
+    private ReviewsRecyclerAdapter mReviewRecyclerAdapter;
 
     @SuppressLint("CheckResult")
     @Override
@@ -101,6 +104,10 @@ public class MovieDetailActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(intent, "View Trailer:"));
             }
         });
+
+        mReviewRecyclerAdapter = new ReviewsRecyclerAdapter();
+        mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mReviewsRecyclerView.setAdapter(mReviewRecyclerAdapter);
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
@@ -125,7 +132,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .observe(this, new Observer<Resource<List<MovieVideo>>>() {
                     @Override
                     public void onChanged(@Nullable Resource<List<MovieVideo>> listResource) {
-                        Log.d("TAG THIS", listResource.getStatus().toString());
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
                                 mTrailersRecyclerAdapter.updateData(listResource.getData());
@@ -146,7 +152,19 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .observe(this, new Observer<Resource<List<MovieReview>>>() {
                     @Override
                     public void onChanged(@Nullable Resource<List<MovieReview>> listResource) {
-
+                        switch (listResource.getStatus()) {
+                            case SUCCESS: {
+                                Log.d("TAG", "Here we are" + listResource.getData().size());
+                                mReviewRecyclerAdapter.updateData(listResource.getData());
+                                break;
+                            }
+                            case ERROR: {
+                                break;
+                            }
+                            case LOADING: {
+                                break;
+                            }
+                        }
                     }
                 });
     }

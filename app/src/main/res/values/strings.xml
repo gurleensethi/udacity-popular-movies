@@ -12,4 +12,6 @@
     <string name="trailers_underlined"><u>Trailers</u></string>
     <string name="trailer_poster">Trailer Poster</string>
     <string name="play_image">Play Image</string>
+    <string name="read_more">Read More…</string>
+    <string name="reviews_underlined"><u>Reviews</u></string>
 </resources>
