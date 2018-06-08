@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+@SuppressWarnings("NullableProblems")
 @Entity(tableName = "movie_video")
 public class MovieVideo {
     private long movieId;

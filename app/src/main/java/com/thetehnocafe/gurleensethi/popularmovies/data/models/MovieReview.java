@@ -2,13 +2,17 @@ package com.thetehnocafe.gurleensethi.popularmovies.data.models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity
+@SuppressWarnings("NullableProblems")
+@Entity(tableName = "movie_review")
 public class MovieReview {
+    private long movieId;
     @PrimaryKey
+    @NonNull
     @SerializedName("id")
     @Expose
     private String id;
@@ -52,5 +56,13 @@ public class MovieReview {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public long getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(long movieId) {
+        this.movieId = movieId;
     }
 }
