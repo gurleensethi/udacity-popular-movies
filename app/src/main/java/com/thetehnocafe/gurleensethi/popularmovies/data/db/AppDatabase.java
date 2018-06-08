@@ -7,6 +7,8 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.converter.IntegerListConverter;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieDAO;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieVideoDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 

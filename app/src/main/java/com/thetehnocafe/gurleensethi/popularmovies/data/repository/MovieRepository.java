@@ -2,21 +2,19 @@ package com.thetehnocafe.gurleensethi.popularmovies.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.thetehnocafe.gurleensethi.popularmovies.AppSecret;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 import com.thetehnocafe.gurleensethi.popularmovies.data.ApiResponse;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.AppDatabase;
-import com.thetehnocafe.gurleensethi.popularmovies.data.db.MovieDAO;
-import com.thetehnocafe.gurleensethi.popularmovies.data.db.MovieVideoDAO;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieDAO;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieVideoDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.NetworkBoundResource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieRequest;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieVideosRequest;
-import com.thetehnocafe.gurleensethi.popularmovies.network.NetworkService;
 import com.thetehnocafe.gurleensethi.popularmovies.network.TMDBApi;
 
 import java.util.List;
