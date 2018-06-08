@@ -24,6 +24,10 @@ public class Helpers {
         return "http://image.tmdb.org/t/p/w780" + path;
     }
 
+    public static String buildYouTubeThumbnailURL(String key) {
+        return  "https://img.youtube.com/vi/" + key + "/0.jpg";
+    }
+
     public static View.OnTouchListener buildAnimatedTouchListener() {
         return buildAnimatedTouchListener(DEFAULT_ANIMATION_DURATION);
     }

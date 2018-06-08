@@ -9,7 +9,10 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -22,8 +25,11 @@ import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MovieDetailActivity extends AppCompatActivity {
@@ -31,27 +37,27 @@ public class MovieDetailActivity extends AppCompatActivity {
     public static final String EXTRA_MOVIE_ID = "movie";
     private long MOVIE_ID;
 
-    private ImageView mBackdropImageView;
-    private ImageView mMovieImageView;
-    private Toolbar mToolbar;
-    private CollapsingToolbarLayout mCollapsingToolbar;
-    private TextView mNameTextView;
-    private TextView mDescriptionTextView;
-    private TextView mRatingTextView;
-    private TextView mDateTextView;
+    @BindView(R.id.backdropImageView)
+    ImageView mBackdropImageView;
+    @BindView(R.id.movieImageView)
+    ImageView mMovieImageView;
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+    @BindView(R.id.collapsingToolbar)
+    CollapsingToolbarLayout mCollapsingToolbar;
+    @BindView(R.id.nameTextView)
+    TextView mNameTextView;
+    @BindView(R.id.descriptionTextView)
+    TextView mDescriptionTextView;
+    @BindView(R.id.ratingsTextView)
+    TextView mRatingTextView;
+    @BindView(R.id.dateTextView)
+    TextView mDateTextView;
+    @BindView(R.id.trailersRecyclerView)
+    RecyclerView mTrailersRecyclerView;
 
     private MovieDetailViewModel mViewModel;
-
-    private void initViews() {
-        setSupportActionBar(mToolbar);
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        }
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mCollapsingToolbar.setTitleEnabled(false);
-
-    }
+    private TrailerRecyclerAdapter mTrailersRecyclerAdapter;
 
     @SuppressLint("CheckResult")
     @Override
@@ -68,19 +74,26 @@ public class MovieDetailActivity extends AppCompatActivity {
             return;
         }
 
-        mToolbar = findViewById(R.id.toolbar);
-        mCollapsingToolbar = findViewById(R.id.collapsingToolbar);
-        mBackdropImageView = findViewById(R.id.backdropImageView);
-        mMovieImageView = findViewById(R.id.movieImageView);
-        mNameTextView = findViewById(R.id.nameTextView);
-        mDescriptionTextView = findViewById(R.id.descriptionTextView);
-        mRatingTextView = findViewById(R.id.ratingsTextView);
-        mDateTextView = findViewById(R.id.dateTextView);
-
         initViewModel();
         initViews();
     }
 
+    private void initViews() {
+        setSupportActionBar(mToolbar);
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        }
+        mToolbar.setTitleTextColor(Color.WHITE);
+        mCollapsingToolbar.setTitleEnabled(false);
+
+        mTrailersRecyclerAdapter = new TrailerRecyclerAdapter();
+        mTrailersRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        mTrailersRecyclerView.setAdapter(mTrailersRecyclerAdapter);
+
+    }
+
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
     private void initViewModel() {
         MovieDetailViewModel.MovieDetailViewModelFactory factory = new MovieDetailViewModel.MovieDetailViewModelFactory(MOVIE_ID);
         mViewModel = ViewModelProviders.of(this, factory).get(MovieDetailViewModel.class);
@@ -102,7 +115,20 @@ public class MovieDetailActivity extends AppCompatActivity {
                 .observe(this, new Observer<Resource<List<MovieVideo>>>() {
                     @Override
                     public void onChanged(@Nullable Resource<List<MovieVideo>> listResource) {
-
+                        Log.d("TAG THIS", listResource.getStatus().toString());
+                        switch (listResource.getStatus()) {
+                            case SUCCESS: {
+                                mTrailersRecyclerAdapter.updateData(listResource.getData());
+                                break;
+                            }
+                            case ERROR: {
+                                break;
+                            }
+                            case LOADING: {
+                                mTrailersRecyclerAdapter.updateData(new ArrayList(Arrays.asList(null, null, null, null)));
+                                break;
+                            }
+                        }
                     }
                 });
     }

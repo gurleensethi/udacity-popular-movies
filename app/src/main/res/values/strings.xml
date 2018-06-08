@@ -10,4 +10,6 @@
     <string name="overview_underlined"><u>Overview</u></string>
     <string name="full_rating_10">/10</string>
     <string name="trailers_underlined"><u>Trailers</u></string>
+    <string name="trailer_poster">Trailer Poster</string>
+    <string name="play_image">Play Image</string>
 </resources>
