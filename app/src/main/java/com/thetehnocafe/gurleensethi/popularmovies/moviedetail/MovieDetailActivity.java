@@ -25,6 +25,7 @@ import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 
 import java.util.ArrayList;
@@ -138,6 +139,14 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 break;
                             }
                         }
+                    }
+                });
+
+        mViewModel.getMovieReviewLiveData()
+                .observe(this, new Observer<Resource<List<MovieReview>>>() {
+                    @Override
+                    public void onChanged(@Nullable Resource<List<MovieReview>> listResource) {
+
                     }
                 });
     }

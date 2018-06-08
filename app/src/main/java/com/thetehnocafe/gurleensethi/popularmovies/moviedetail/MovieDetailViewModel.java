@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.AppDatabase;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 import com.thetehnocafe.gurleensethi.popularmovies.data.repository.MovieRepository;
 import com.thetehnocafe.gurleensethi.popularmovies.network.NetworkService;
@@ -21,11 +22,13 @@ public class MovieDetailViewModel extends ViewModel {
 
     private LiveData<Movie> movieLiveData;
     private LiveData<Resource<List<MovieVideo>>> movieVideoLiveData;
+    private LiveData<Resource<List<MovieReview>>> movieReviewLiveData;
 
     public MovieDetailViewModel(long movieId) {
         this.movieId = movieId;
         movieLiveData = movieRepository.getMovie(movieId);
         movieVideoLiveData = movieRepository.getMovieVideos(movieId);
+        movieReviewLiveData = movieRepository.getMovieReviews(movieId);
     }
 
     public LiveData<Movie> getMovie() {
@@ -34,6 +37,10 @@ public class MovieDetailViewModel extends ViewModel {
 
     public LiveData<Resource<List<MovieVideo>>> getMovieVideoLiveData() {
         return movieVideoLiveData;
+    }
+
+    public LiveData<Resource<List<MovieReview>>> getMovieReviewLiveData() {
+        return movieReviewLiveData;
     }
 
     @SuppressWarnings({"unchecked"})

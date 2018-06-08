@@ -8,12 +8,15 @@ import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 import com.thetehnocafe.gurleensethi.popularmovies.data.ApiResponse;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.AppDatabase;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieDAO;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieReviewDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieVideoDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 import com.thetehnocafe.gurleensethi.popularmovies.data.NetworkBoundResource;
+import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieRequest;
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;
+import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieReviewsRequest;
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieVideosRequest;
 import com.thetehnocafe.gurleensethi.popularmovies.network.TMDBApi;
 
@@ -28,11 +31,13 @@ public class MovieRepository {
     private final TMDBApi tmdbApi;
     private final MovieDAO movieDAO;
     private final MovieVideoDAO movieVideoDAO;
+    private final MovieReviewDAO movieReviewDAO;
 
     public MovieRepository(TMDBApi tmdbApi, AppDatabase appDatabase) {
         this.tmdbApi = tmdbApi;
         this.movieDAO = appDatabase.getMovieDAO();
         movieVideoDAO = appDatabase.getMovieVideoDAO();
+        movieReviewDAO = appDatabase.getMovieReviewDAO();
     }
 
     public LiveData<Resource<List<Movie>>> getMovies(final SortOption sortOption) {
@@ -132,6 +137,47 @@ public class MovieRepository {
                             public void onFailure(Call<MovieVideosRequest> call, Throwable t) {
                                 ApiResponse<MovieVideosRequest> apiResponse = new ApiResponse<>(false, null, null);
                                 apiResult.setValue(apiResponse);
+                            }
+                        });
+
+                return apiResult;
+            }
+        }.getAsLiveData();
+    }
+
+    public LiveData<Resource<List<MovieReview>>> getMovieReviews(final long movieId) {
+        return new NetworkBoundResource<List<MovieReview>, MovieReviewsRequest>() {
+
+            @Override
+            protected boolean shouldFetch(List<MovieReview> reviews) {
+                return true;
+            }
+
+            @Override
+            protected LiveData<List<MovieReview>> loadFromDB() {
+                return movieReviewDAO.getMovieReviews(movieId);
+            }
+
+            @Override
+            protected void saveCallResponse(MovieReviewsRequest item) {
+                movieReviewDAO.deleteAllReviews(movieId);
+                movieReviewDAO.insert(item.getReviews());
+            }
+
+            @Override
+            protected LiveData<ApiResponse<MovieReviewsRequest>> createCall() {
+                final MutableLiveData<ApiResponse<MovieReviewsRequest>> apiResult = new MutableLiveData<>();
+
+                tmdbApi.getMovieReviews(movieId, AppSecret.API_KEY)
+                        .enqueue(new Callback<MovieReviewsRequest>() {
+                            @Override
+                            public void onResponse(Call<MovieReviewsRequest> call, Response<MovieReviewsRequest> response) {
+                                apiResult.setValue(new ApiResponse<MovieReviewsRequest>(true, response.body(), null));
+                            }
+
+                            @Override
+                            public void onFailure(Call<MovieReviewsRequest> call, Throwable t) {
+                                apiResult.setValue(new ApiResponse<MovieReviewsRequest>(false, null, null));
                             }
                         });
 

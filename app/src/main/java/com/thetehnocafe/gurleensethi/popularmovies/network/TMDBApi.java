@@ -1,6 +1,7 @@
 package com.thetehnocafe.gurleensethi.popularmovies.network;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieRequest;
+import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieReviewsRequest;
 import com.thetehnocafe.gurleensethi.popularmovies.data.requestmodels.MovieVideosRequest;
 
 import retrofit2.Call;
@@ -17,4 +18,7 @@ public interface TMDBApi {
 
     @GET("movie/{id}/videos")
     Call<MovieVideosRequest> getMovieVideos(@Path("id") long id, @Query("api_key") String apiKey);
+
+    @GET("movie/{id}/reviews")
+    Call<MovieReviewsRequest> getMovieReviews(@Path("id") long id, @Query("api_key") String apiKey);
 }
