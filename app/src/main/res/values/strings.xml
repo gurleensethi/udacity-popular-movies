@@ -15,4 +15,6 @@
     <string name="read_more">Read More…</string>
     <string name="reviews_underlined"><u>Reviews</u></string>
     <string name="close">Close</string>
+    <string name="no_reviews_available">No reviews available.</string>
+    <string name="no_trailers_available">No trailers available.</string>
 </resources>

@@ -14,8 +14,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -61,6 +61,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     RecyclerView mTrailersRecyclerView;
     @BindView(R.id.reviewsRecyclerView)
     RecyclerView mReviewsRecyclerView;
+    @BindView(R.id.noReviewsAvailableTextView)
+    TextView mNoReviewsAvailableTextView;
+    @BindView(R.id.noTrailersAvailableTextView)
+    TextView mNoTrailersAvailableTextView;
 
     private MovieDetailViewModel mViewModel;
     private TrailerRecyclerAdapter mTrailersRecyclerAdapter;
@@ -142,7 +146,12 @@ public class MovieDetailActivity extends AppCompatActivity {
                     public void onChanged(@Nullable Resource<List<MovieVideo>> listResource) {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
-                                mTrailersRecyclerAdapter.updateData(listResource.getData());
+                                if (listResource.getData().size() == 0) {
+                                    mNoTrailersAvailableTextView.setVisibility(View.VISIBLE);
+                                    mTrailersRecyclerView.setVisibility(View.GONE);
+                                } else {
+                                    mTrailersRecyclerAdapter.updateData(listResource.getData());
+                                }
                                 break;
                             }
                             case ERROR: {
@@ -162,7 +171,12 @@ public class MovieDetailActivity extends AppCompatActivity {
                     public void onChanged(@Nullable Resource<List<MovieReview>> listResource) {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
-                                mReviewRecyclerAdapter.updateData(listResource.getData());
+                                if (listResource.getData().size() == 0) {
+                                    mNoReviewsAvailableTextView.setVisibility(View.VISIBLE);
+                                    mReviewsRecyclerView.setVisibility(View.GONE);
+                                } else {
+                                    mReviewRecyclerAdapter.updateData(listResource.getData());
+                                }
                                 break;
                             }
                             case ERROR: {
