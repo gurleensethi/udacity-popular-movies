@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -65,6 +66,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView mNoReviewsAvailableTextView;
     @BindView(R.id.noTrailersAvailableTextView)
     TextView mNoTrailersAvailableTextView;
+    @BindView(R.id.shareTrailerButton)
+    Button mShareTrailerButton;
 
     private MovieDetailViewModel mViewModel;
     private TrailerRecyclerAdapter mTrailersRecyclerAdapter;
@@ -143,7 +146,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         mViewModel.getMovieVideoLiveData()
                 .observe(this, new Observer<Resource<List<MovieVideo>>>() {
                     @Override
-                    public void onChanged(@Nullable Resource<List<MovieVideo>> listResource) {
+                    public void onChanged(@Nullable final Resource<List<MovieVideo>> listResource) {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
                                 if (listResource.getData().size() == 0) {
@@ -151,6 +154,21 @@ public class MovieDetailActivity extends AppCompatActivity {
                                     mTrailersRecyclerView.setVisibility(View.GONE);
                                 } else {
                                     mTrailersRecyclerAdapter.updateData(listResource.getData());
+                                    mShareTrailerButton.setVisibility(View.VISIBLE);
+                                    mShareTrailerButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            MovieVideo video = listResource.getData().get(0);
+                                            Intent intent = new Intent(Intent.ACTION_SEND);
+                                            intent.setType("text/plain");
+                                            intent.putExtra(Intent.EXTRA_TEXT, String.format(
+                                                    getString(R.string.share_trailer_content),
+                                                    mViewModel.getMovie().getValue().getOriginalTitle(),
+                                                    Helpers.buildYoutubeURL(video.getKey())
+                                            ));
+                                            startActivity(Intent.createChooser(intent, getString(R.string.share_trailer)));
+                                        }
+                                    });
                                 }
                                 break;
                             }

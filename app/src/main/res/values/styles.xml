@@ -15,4 +15,9 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="GreenOutlineButton">
+        <item name="android:background">@drawable/button_outline_green</item>
+        <item name="android:textColor">@color/green</item>
+    </style>
+
 </resources>

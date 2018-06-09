@@ -58,8 +58,8 @@
                 android:id="@+id/movieImageView"
                 android:layout_width="140dp"
                 android:layout_height="210dp"
-                android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginStart="16dp"
                 android:background="@android:color/transparent"
                 android:contentDescription="@string/movie_poster_image"
                 android:scaleType="centerCrop"
@@ -146,10 +146,10 @@
                 android:layout_marginTop="32dp"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
+                android:paddingBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextView">
 
                 <TextView
@@ -162,18 +162,18 @@
                     android:text="@string/trailers_underlined"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/noTrailersAvailableTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="@string/no_trailers_available"
-                    android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:visibility="gone"/>
+                    android:text="@string/no_trailers_available"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/trailersRecyclerView"
@@ -197,17 +197,17 @@
                     android:text="@string/reviews_underlined"
                     android:textColor="@android:color/white"
                     android:textSize="16sp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/noReviewsAvailableTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="@string/no_reviews_available"
-                    android:layout_marginStart="16dp"
                     android:layout_marginLeft="16dp"
-                    android:visibility="gone"/>
+                    android:layout_marginStart="16dp"
+                    android:text="@string/no_reviews_available"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/reviewsRecyclerView"
@@ -221,6 +221,15 @@
                     app:layout_constraintTop_toBottomOf="@id/reviewLabel">
 
                 </android.support.v7.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/shareTrailerButton"
+                    style="@style/GreenOutlineButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:text="@string/share_trailer"
+                    android:visibility="gone" />
 
             </LinearLayout>
 
