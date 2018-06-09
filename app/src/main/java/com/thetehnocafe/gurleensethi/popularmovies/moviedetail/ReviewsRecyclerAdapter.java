@@ -1,6 +1,7 @@
 package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,8 @@ import android.widget.Button;
 
 import android.widget.TextView;
 
+import com.facebook.shimmer.Shimmer;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 
@@ -60,6 +63,10 @@ public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecycler
         TextView mContentTextView;
         @BindView(R.id.readMoreButton)
         Button mReadMoreButton;
+        @BindView(R.id.contentConstraintLayout)
+        ConstraintLayout mContentConstraintLayout;
+        @BindView(R.id.shimmerLayout)
+        ShimmerFrameLayout mShimmerLayout;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -78,6 +85,13 @@ public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecycler
 
         void bindView(int position) {
             MovieReview review = mReviews.get(position);
+            if (review == null) {
+                mShimmerLayout.startShimmer();
+                return;
+            }
+
+            mShimmerLayout.setVisibility(View.GONE);
+            mContentConstraintLayout.setVisibility(View.VISIBLE);
 
             mAuthorNameTextView.setText(review.getAuthor());
             mContentTextView.setText(review.getContent());

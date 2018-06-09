@@ -162,7 +162,6 @@ public class MovieDetailActivity extends AppCompatActivity {
                     public void onChanged(@Nullable Resource<List<MovieReview>> listResource) {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
-                                Log.d("TAG", "Here we are" + listResource.getData().size());
                                 mReviewRecyclerAdapter.updateData(listResource.getData());
                                 break;
                             }
@@ -170,6 +169,7 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 break;
                             }
                             case LOADING: {
+                                mReviewRecyclerAdapter.updateData(new ArrayList(Arrays.asList(null, null, null, null)));
                                 break;
                             }
                         }

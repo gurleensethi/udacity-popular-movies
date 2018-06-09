@@ -4,17 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="16dp"
     android:layout_marginBottom="16dp"
     android:layout_marginEnd="16dp"
     android:layout_marginRight="16dp"
+    android:layout_marginTop="16dp"
     app:cardBackgroundColor="@color/colorPrimary"
     app:cardCornerRadius="4dp"
     app:cardElevation="10dp">
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/contentConstraintLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/authorNameTextView"
@@ -53,5 +55,26 @@
             app:layout_constraintTop_toBottomOf="@id/contentTextView" />
 
     </android.support.constraint.ConstraintLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_base_alpha="0.7">
+
+        <!--These are placeholders for shimmering-->
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:cardBackgroundColor="@android:color/white"
+            app:cardCornerRadius="4dp">
+
+        </android.support.v7.widget.CardView>
+
+
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </android.support.v7.widget.CardView>
