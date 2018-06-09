@@ -21,11 +21,11 @@ import butterknife.ButterKnife;
 
 public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecyclerAdapter.ViewHolder> {
     interface ActionListener {
-
+        void onReadMoreCLicked(MovieReview review);
     }
 
     private List<MovieReview> mReviews = new ArrayList<>();
-    private TrailerRecyclerAdapter.ActionListener mActionListener;
+    private ActionListener mActionListener;
 
     @NonNull
     @Override
@@ -49,7 +49,7 @@ public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecycler
         notifyDataSetChanged();
     }
 
-    public void addActionListener(TrailerRecyclerAdapter.ActionListener actionListener) {
+    public void addActionListener(ActionListener actionListener) {
         this.mActionListener = actionListener;
     }
 
@@ -65,6 +65,15 @@ public class ReviewsRecyclerAdapter extends RecyclerView.Adapter<ReviewsRecycler
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this, itemView);
+
+            mReadMoreButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mActionListener != null) {
+                        mActionListener.onReadMoreCLicked(mReviews.get(getAdapterPosition()));
+                    }
+                }
+            });
         }
 
         void bindView(int position) {

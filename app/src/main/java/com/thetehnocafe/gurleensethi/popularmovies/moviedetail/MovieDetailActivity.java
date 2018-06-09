@@ -38,6 +38,7 @@ import butterknife.ButterKnife;
 public class MovieDetailActivity extends AppCompatActivity {
 
     public static final String EXTRA_MOVIE_ID = "movie";
+    public static final String TAG_REVIEW_BOTTOM_SHEET = "review_bottom_sheet";
     private long MOVIE_ID;
 
     @BindView(R.id.backdropImageView)
@@ -108,6 +109,13 @@ public class MovieDetailActivity extends AppCompatActivity {
         mReviewRecyclerAdapter = new ReviewsRecyclerAdapter();
         mReviewsRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
         mReviewsRecyclerView.setAdapter(mReviewRecyclerAdapter);
+        mReviewRecyclerAdapter.addActionListener(new ReviewsRecyclerAdapter.ActionListener() {
+            @Override
+            public void onReadMoreCLicked(MovieReview review) {
+                ReviewBottomSheetFragment fragment = ReviewBottomSheetFragment.getInstance(review);
+                fragment.show(getSupportFragmentManager(), TAG_REVIEW_BOTTOM_SHEET);
+            }
+        });
     }
 
     @SuppressWarnings({"unchecked", "ConstantConditions"})
