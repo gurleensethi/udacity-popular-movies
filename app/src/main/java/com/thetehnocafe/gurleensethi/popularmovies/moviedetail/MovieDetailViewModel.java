@@ -3,7 +3,6 @@ package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.support.annotation.NonNull;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.Resource;

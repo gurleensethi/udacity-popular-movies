@@ -2,15 +2,12 @@ package com.thetehnocafe.gurleensethi.popularmovies.data.models;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 
 import java.util.List;
-import java.util.Objects;
 
 @Entity(tableName = "movie")
 public class Movie {

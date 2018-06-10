@@ -4,8 +4,6 @@ import android.arch.persistence.room.TypeConverter;
 
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 
-import java.security.PublicKey;
-
 public class SortOptionConverter {
     @TypeConverter
     public static String convertSortOptionToString(SortOption sortOption) {

@@ -2,7 +2,6 @@ package com.thetehnocafe.gurleensethi.popularmovies.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
-import android.util.Log;
 
 import com.thetehnocafe.gurleensethi.popularmovies.AppSecret;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
@@ -178,7 +177,7 @@ public class MovieRepository {
                         .enqueue(new Callback<MovieReviewsRequest>() {
                             @Override
                             public void onResponse(Call<MovieReviewsRequest> call, Response<MovieReviewsRequest> response) {
-                                apiResult.setValue(new ApiResponse<MovieReviewsRequest>(true, response.body(), null));
+                                apiResult.setValue(new ApiResponse<>(true, response.body(), null));
                             }
 
                             @Override

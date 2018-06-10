@@ -10,7 +10,6 @@ import android.widget.Button;
 
 import android.widget.TextView;
 
-import com.facebook.shimmer.Shimmer;
 import com.facebook.shimmer.ShimmerFrameLayout;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
@@ -18,7 +17,6 @@ import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindBitmap;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 

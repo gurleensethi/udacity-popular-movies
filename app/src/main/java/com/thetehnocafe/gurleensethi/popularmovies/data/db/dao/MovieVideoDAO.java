@@ -10,8 +10,6 @@ import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 
 import java.util.List;
 
-import retrofit2.http.GET;
-
 @Dao
 public abstract class MovieVideoDAO {
 
