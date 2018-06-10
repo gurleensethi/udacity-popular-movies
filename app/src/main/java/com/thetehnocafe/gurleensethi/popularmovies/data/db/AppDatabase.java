@@ -7,6 +7,7 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.converter.IntegerListConverter;
+import com.thetehnocafe.gurleensethi.popularmovies.data.db.converter.SortOptionConverter;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieReviewDAO;
 import com.thetehnocafe.gurleensethi.popularmovies.data.db.dao.MovieVideoDAO;
@@ -15,7 +16,7 @@ import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieVideo;
 
 @Database(entities = {Movie.class, MovieVideo.class, MovieReview.class}, version = 1)
-@TypeConverters({IntegerListConverter.class})
+@TypeConverters({IntegerListConverter.class, SortOptionConverter.class})
 public abstract class AppDatabase extends RoomDatabase {
     private static AppDatabase sInstance;
 

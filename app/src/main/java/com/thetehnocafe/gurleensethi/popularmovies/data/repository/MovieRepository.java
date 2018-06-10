@@ -2,6 +2,7 @@ package com.thetehnocafe.gurleensethi.popularmovies.data.repository;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.util.Log;
 
 import com.thetehnocafe.gurleensethi.popularmovies.AppSecret;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
@@ -60,13 +61,13 @@ public class MovieRepository {
                 if (sortOption == SortOption.FAVOURITE) {
                     return movieDAO.getFavouriteMovies();
                 } else {
-                    return movieDAO.getMovies();
+                    return movieDAO.getMovies(sortOption);
                 }
             }
 
             @Override
             protected void saveCallResponse(MovieRequest item) {
-                movieDAO.updateMovies(item.getResults());
+                movieDAO.updateMovies(item.getResults(), sortOption);
             }
 
             @Override

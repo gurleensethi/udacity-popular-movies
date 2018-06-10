@@ -37,9 +37,7 @@ public class HomeViewModel extends ViewModel {
         sortOptionLiveData.setValue(sortOption);
     }
 
-    @Override
-    protected void onCleared() {
-        super.onCleared();
-        Log.d("onCleared", "View Model cleared");
+    public MutableLiveData<SortOption> getSortOption() {
+        return sortOptionLiveData;
     }
 }

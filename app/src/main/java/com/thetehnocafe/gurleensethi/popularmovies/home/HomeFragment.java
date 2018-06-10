@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -145,6 +146,11 @@ public class HomeFragment extends Fragment {
                         switch (movieResource.getStatus()) {
                             case SUCCESS: {
                                 mMoviesRecyclerAdapter.updateData(movieResource.getData());
+                                if (movieResource.getData().size() == 0 && mViewModel.getSortOption().getValue() == SortOption.FAVOURITE) {
+                                    mMessageTextView.setText(R.string.no_favourite_movies);
+                                    mMoviesRecyclerView.setVisibility(View.GONE);
+                                    mMessageTextView.setVisibility(View.VISIBLE);
+                                }
                                 break;
                             }
                             case LOADING: {
@@ -154,6 +160,7 @@ public class HomeFragment extends Fragment {
                                 break;
                             }
                             case ERROR: {
+                                mMessageTextView.setText(getString(R.string.unable_to_get_movies));
                                 mMoviesRecyclerView.setVisibility(View.GONE);
                                 mMessageTextView.setVisibility(View.VISIBLE);
                                 break;

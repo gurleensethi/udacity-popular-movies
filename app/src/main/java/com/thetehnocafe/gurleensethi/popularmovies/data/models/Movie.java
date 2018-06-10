@@ -7,13 +7,15 @@ import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 
 import java.util.List;
 import java.util.Objects;
 
 @Entity(tableName = "movie")
 public class Movie {
-    private boolean isFavourite;
+    private boolean isFavourite = false;
+    private SortOption sortOption;
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -170,30 +172,11 @@ public class Movie {
         isFavourite = favourite;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Movie movie = (Movie) o;
-        return isFavourite == movie.isFavourite &&
-                adult == movie.adult &&
-                id == movie.id &&
-                voteCount == movie.voteCount &&
-                video == movie.video &&
-                Float.compare(movie.voteAverage, voteAverage) == 0 &&
-                Objects.equals(posterPath, movie.posterPath) &&
-                Objects.equals(overview, movie.overview) &&
-                Objects.equals(releaseData, movie.releaseData) &&
-                Objects.equals(originalTitle, movie.originalTitle) &&
-                Objects.equals(originalLanguage, movie.originalLanguage) &&
-                Objects.equals(title, movie.title) &&
-                Objects.equals(backdropPath, movie.backdropPath) &&
-                Objects.equals(genreIds, movie.genreIds);
+    public SortOption getSortOption() {
+        return sortOption;
     }
 
-    @Override
-    public int hashCode() {
-
-        return Objects.hash(isFavourite, posterPath, adult, overview, releaseData, id, originalTitle, originalLanguage, title, backdropPath, voteCount, video, voteAverage, genreIds);
+    public void setSortOption(SortOption sortOption) {
+        this.sortOption = sortOption;
     }
 }

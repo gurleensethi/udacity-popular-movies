@@ -103,6 +103,21 @@
                 app:layout_constraintTop_toBottomOf="@id/dateTextView"
                 tools:text="7.3" />
 
+            <ToggleButton
+                android:id="@+id/favouriteToggleButton"
+                style="@style/GreenOutlineToggleButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:checked="false"
+                android:textOff="@string/favourite"
+                android:textOn="@string/favourited"
+                app:layout_constraintLeft_toLeftOf="@id/ratingsTextView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingsTextView" />
+
             <TextView
                 android:id="@+id/fullRatingLabel"
                 android:layout_width="wrap_content"

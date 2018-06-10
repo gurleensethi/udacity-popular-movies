@@ -12,7 +12,6 @@ import android.widget.Button;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 
-import butterknife.BindInt;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
