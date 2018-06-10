@@ -32,7 +32,7 @@ public abstract class MovieDAO {
     @Query("DELETE FROM movie")
     public abstract void deleteAllMovies();
 
-    @Query("SELECT * FROM movie WHERE isFavourite = 1")
+    @Query("SELECT * FROM movie WHERE isFavourite = 1 ORDER BY id")
     public abstract LiveData<List<Movie>> getFavouriteMovies();
 
     @Query("DELETE FROM movie WHERE isFavourite = 0")
