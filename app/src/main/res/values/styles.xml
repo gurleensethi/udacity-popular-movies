@@ -20,4 +20,9 @@
         <item name="android:textColor">@color/green</item>
     </style>
 
+    <style name="GreenOutlineToggleButton">
+        <item name="android:background">@drawable/toggle_button_outline_green</item>
+        <item name="android:textColor">@drawable/toggle_button_outline_green</item>
+    </style>
+
 </resources>

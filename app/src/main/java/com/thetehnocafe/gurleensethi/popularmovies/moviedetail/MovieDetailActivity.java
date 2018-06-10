@@ -17,8 +17,10 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -68,6 +70,8 @@ public class MovieDetailActivity extends AppCompatActivity {
     TextView mNoTrailersAvailableTextView;
     @BindView(R.id.shareTrailerButton)
     Button mShareTrailerButton;
+    @BindView(R.id.favouriteToggleButton)
+    ToggleButton mFavouriteToggleButton;
 
     private MovieDetailViewModel mViewModel;
     private TrailerRecyclerAdapter mTrailersRecyclerAdapter;
@@ -121,6 +125,13 @@ public class MovieDetailActivity extends AppCompatActivity {
             public void onReadMoreCLicked(MovieReview review) {
                 ReviewBottomSheetFragment fragment = ReviewBottomSheetFragment.getInstance(review);
                 fragment.show(getSupportFragmentManager(), TAG_REVIEW_BOTTOM_SHEET);
+            }
+        });
+
+        mFavouriteToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                mViewModel.toggleFavourite(isChecked);
             }
         });
     }
@@ -234,6 +245,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         mDescriptionTextView.setText(movie.getOverview());
         mRatingTextView.setText(String.valueOf(movie.getVoteAverage()));
         mDateTextView.setText(Helpers.convertReleaseDate(movie.getReleaseData()));
+        mFavouriteToggleButton.setChecked(movie.isFavourite());
     }
 
     @Override

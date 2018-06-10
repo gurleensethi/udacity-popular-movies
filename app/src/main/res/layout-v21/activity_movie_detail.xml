@@ -112,6 +112,20 @@
                 app:layout_constraintBaseline_toBaselineOf="@id/ratingsTextView"
                 app:layout_constraintLeft_toRightOf="@id/ratingsTextView" />
 
+            <ToggleButton
+                android:id="@+id/favouriteToggleButton"
+                style="@style/GreenOutlineToggleButton"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginTop="16dp"
+                android:checked="false"
+                android:textOff="@string/favourite"
+                android:textOn="@string/favourited"
+                app:layout_constraintLeft_toLeftOf="@id/ratingsTextView"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ratingsTextView" />
+
             <TextView
                 android:id="@+id/overviewLabel"
                 android:layout_width="0dp"
@@ -134,10 +148,10 @@
                 android:layout_marginTop="16dp"
                 android:textColor="@color/grey_200"
                 android:textSize="14sp"
-                tools:lines="10"
                 app:layout_constraintLeft_toLeftOf="@id/overviewLabel"
                 app:layout_constraintRight_toRightOf="@id/overviewLabel"
                 app:layout_constraintTop_toBottomOf="@id/overviewLabel"
+                tools:lines="10"
                 tools:text="@tools:sample/lorem/random" />
 
             <LinearLayout
@@ -146,10 +160,10 @@
                 android:layout_marginTop="32dp"
                 android:background="@color/colorPrimary"
                 android:orientation="vertical"
+                android:paddingBottom="40dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:paddingBottom="40dp"
                 app:layout_constraintTop_toBottomOf="@id/descriptionTextView">
 
                 <TextView
@@ -169,11 +183,11 @@
                     android:id="@+id/noTrailersAvailableTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="@string/no_trailers_available"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:visibility="gone"/>
+                    android:text="@string/no_trailers_available"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/trailersRecyclerView"
@@ -205,11 +219,11 @@
                     android:id="@+id/noReviewsAvailableTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@android:color/white"
-                    android:text="@string/no_reviews_available"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:visibility="gone"/>
+                    android:text="@string/no_reviews_available"
+                    android:textColor="@android:color/white"
+                    android:visibility="gone" />
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/reviewsRecyclerView"
@@ -226,12 +240,12 @@
 
                 <Button
                     android:id="@+id/shareTrailerButton"
+                    style="@style/GreenOutlineButton"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="16dp"
                     android:text="@string/share_trailer"
-                    style="@style/GreenOutlineButton"
-                    android:visibility="gone"/>
+                    android:visibility="gone" />
 
             </LinearLayout>
 

@@ -12,6 +12,7 @@ import java.util.List;
 
 @Entity(tableName = "movie")
 public class Movie {
+    private boolean isFavourite;
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
@@ -158,5 +159,13 @@ public class Movie {
 
     public void setGenreIds(List<Integer> genreIds) {
         this.genreIds = genreIds;
+    }
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
     }
 }

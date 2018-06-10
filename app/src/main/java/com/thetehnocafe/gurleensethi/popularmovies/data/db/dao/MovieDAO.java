@@ -5,6 +5,7 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Delete;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Update;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.Movie;
 
@@ -26,4 +27,7 @@ public interface MovieDAO {
 
     @Query("DELETE FROM movie")
     void deleteAllMovies();
+
+    @Update
+    void update(Movie movie);
 }

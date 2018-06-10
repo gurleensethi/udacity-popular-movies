@@ -22,6 +22,14 @@ import com.thetehnocafe.gurleensethi.popularmovies.network.TMDBApi;
 
 import java.util.List;
 
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -160,7 +168,7 @@ public class MovieRepository {
 
             @Override
             protected void saveCallResponse(MovieReviewsRequest item) {
-                for(MovieReview review : item.getReviews()) {
+                for (MovieReview review : item.getReviews()) {
                     review.setMovieId(movieId);
                 }
                 movieReviewDAO.deleteAllReviews(movieId);
@@ -187,5 +195,34 @@ public class MovieRepository {
                 return apiResult;
             }
         }.getAsLiveData();
+    }
+
+    public void updateMovie(final Movie movie) {
+        Observable.create(new ObservableOnSubscribe<Void>() {
+            @Override
+            public void subscribe(ObservableEmitter<Void> emitter) throws Exception {
+                movieDAO.update(movie);
+                emitter.onComplete();
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Void>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(Void aVoid) {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onComplete() {
+                    }
+                });
     }
 }

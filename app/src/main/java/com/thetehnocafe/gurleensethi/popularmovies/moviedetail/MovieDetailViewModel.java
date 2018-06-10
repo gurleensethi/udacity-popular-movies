@@ -43,11 +43,17 @@ public class MovieDetailViewModel extends ViewModel {
         return movieReviewLiveData;
     }
 
+    @SuppressWarnings("ConstantConditions")
+    public void toggleFavourite(boolean favourite) {
+        movieLiveData.getValue().setFavourite(favourite);
+        movieRepository.updateMovie(movieLiveData.getValue());
+    }
+
     @SuppressWarnings({"unchecked"})
     static class MovieDetailViewModelFactory extends ViewModelProvider.NewInstanceFactory {
         private long movieId;
 
-        public MovieDetailViewModelFactory(long movieId) {
+        MovieDetailViewModelFactory(long movieId) {
             this.movieId = movieId;
         }
 
