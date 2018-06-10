@@ -26,7 +26,6 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
-import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -63,8 +62,7 @@ public class MovieRepository {
 
             @Override
             protected void saveCallResponse(MovieRequest item) {
-                movieDAO.deleteAllMovies();
-                movieDAO.insert(item.getResults());
+                movieDAO.updateMovies(item.getResults());
             }
 
             @Override
@@ -80,7 +78,7 @@ public class MovieRepository {
 
                     @Override
                     public void onFailure(Call<MovieRequest> call, Throwable t) {
-                        ApiResponse<MovieRequest> apiResponse = new ApiResponse<>(false, null, null);
+                        ApiResponse<MovieRequest> apiResponse = new ApiResponse<>(false, null, "Unable to get new movies.");
                         apiResult.setValue(apiResponse);
                     }
                 };
@@ -143,7 +141,7 @@ public class MovieRepository {
 
                             @Override
                             public void onFailure(Call<MovieVideosRequest> call, Throwable t) {
-                                ApiResponse<MovieVideosRequest> apiResponse = new ApiResponse<>(false, null, null);
+                                ApiResponse<MovieVideosRequest> apiResponse = new ApiResponse<>(false, null, "Unable to get movie videos.");
                                 apiResult.setValue(apiResponse);
                             }
                         });
@@ -188,7 +186,7 @@ public class MovieRepository {
 
                             @Override
                             public void onFailure(Call<MovieReviewsRequest> call, Throwable t) {
-                                apiResult.setValue(new ApiResponse<MovieReviewsRequest>(false, null, null));
+                                apiResult.setValue(new ApiResponse<MovieReviewsRequest>(false, null, "Unable to get movie reviews."));
                             }
                         });
 
