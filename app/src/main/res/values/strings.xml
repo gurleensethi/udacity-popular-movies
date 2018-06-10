@@ -23,4 +23,6 @@
     <string name="favourited">Favourited</string>
     <string name="unable_to_get_movies">Unable to get movies :(</string>
     <string name="no_favourite_movies">No movies found. Press the favourite button on a movie and it will show up in here.</string>
+    <string name="unable_to_get_reviews">Unable to get reviews.</string>
+    <string name="unable_to_get_trailers">Unable to get trailers.</string>
 </resources>

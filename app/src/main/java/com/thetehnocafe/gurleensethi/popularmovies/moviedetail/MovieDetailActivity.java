@@ -64,10 +64,10 @@ public class MovieDetailActivity extends AppCompatActivity {
     RecyclerView mTrailersRecyclerView;
     @BindView(R.id.reviewsRecyclerView)
     RecyclerView mReviewsRecyclerView;
-    @BindView(R.id.noReviewsAvailableTextView)
-    TextView mNoReviewsAvailableTextView;
-    @BindView(R.id.noTrailersAvailableTextView)
-    TextView mNoTrailersAvailableTextView;
+    @BindView(R.id.reviewsMessageTextView)
+    TextView mReviewMessageTextView;
+    @BindView(R.id.trailersMessageTextView)
+    TextView mTrailersMessageTextView;
     @BindView(R.id.shareTrailerButton)
     Button mShareTrailerButton;
     @BindView(R.id.favouriteToggleButton)
@@ -161,7 +161,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
                                 if (listResource.getData().size() == 0) {
-                                    mNoTrailersAvailableTextView.setVisibility(View.VISIBLE);
+                                    mTrailersMessageTextView.setText(R.string.no_trailers_available);
+                                    mTrailersMessageTextView.setVisibility(View.VISIBLE);
                                     mTrailersRecyclerView.setVisibility(View.GONE);
                                 } else {
                                     mTrailersRecyclerAdapter.updateData(listResource.getData());
@@ -184,6 +185,9 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 break;
                             }
                             case ERROR: {
+                                mTrailersMessageTextView.setText(R.string.unable_to_get_trailers);
+                                mTrailersMessageTextView.setVisibility(View.VISIBLE);
+                                mTrailersRecyclerView.setVisibility(View.GONE);
                                 break;
                             }
                             case LOADING: {
@@ -201,7 +205,8 @@ public class MovieDetailActivity extends AppCompatActivity {
                         switch (listResource.getStatus()) {
                             case SUCCESS: {
                                 if (listResource.getData().size() == 0) {
-                                    mNoReviewsAvailableTextView.setVisibility(View.VISIBLE);
+                                    mReviewMessageTextView.setText(R.string.no_reviews_available);
+                                    mReviewMessageTextView.setVisibility(View.VISIBLE);
                                     mReviewsRecyclerView.setVisibility(View.GONE);
                                 } else {
                                     mReviewRecyclerAdapter.updateData(listResource.getData());
@@ -209,6 +214,9 @@ public class MovieDetailActivity extends AppCompatActivity {
                                 break;
                             }
                             case ERROR: {
+                                mReviewMessageTextView.setText(R.string.unable_to_get_reviews);
+                                mReviewMessageTextView.setVisibility(View.VISIBLE);
+                                mReviewsRecyclerView.setVisibility(View.GONE);
                                 break;
                             }
                             case LOADING: {
