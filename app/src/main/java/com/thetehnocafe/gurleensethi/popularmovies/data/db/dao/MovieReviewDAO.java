@@ -4,25 +4,35 @@ import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 
 import com.thetehnocafe.gurleensethi.popularmovies.data.models.MovieReview;
 
 import java.util.List;
 
 @Dao
-public interface MovieReviewDAO {
+public abstract class MovieReviewDAO {
     @Insert
-    void insert(List<MovieReview> reviews);
+    public abstract void insert(List<MovieReview> reviews);
 
     @Insert
-    void insert(MovieReview review);
+    public abstract void insert(MovieReview review);
 
     @Query("SELECT * FROM movie_review WHERE movieId = :id")
-    LiveData<List<MovieReview>> getMovieReviews(long id);
+    public abstract LiveData<List<MovieReview>> getMovieReviews(long id);
 
     @Query("SELECT * FROM movie_review WHERE id = :id")
-    LiveData<MovieReview> getMovieReview(long id);
+    public abstract LiveData<MovieReview> getMovieReview(long id);
 
     @Query("DELETE FROM movie_review WHERE movieId = :id")
-    void deleteAllReviews(long id);
+    public abstract void deleteAllReviews(long id);
+
+    @Transaction
+    public void updateData(List<MovieReview> reviews, long id) {
+        for (MovieReview review : reviews) {
+            review.setMovieId(id);
+        }
+        deleteAllReviews(id);
+        insert(reviews);
+    }
 }

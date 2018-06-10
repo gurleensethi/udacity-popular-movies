@@ -110,7 +110,7 @@ public class MovieRepository {
         return movieDAO.getMovie(id);
     }
 
-    public LiveData<Resource<List<MovieVideo>>> getMovieVideos(final long id) {
+    public LiveData<Resource<List<MovieVideo>>> getMovieVideos(final long movieId) {
         return new NetworkBoundResource<List<MovieVideo>, MovieVideosRequest>() {
 
             @Override
@@ -120,23 +120,19 @@ public class MovieRepository {
 
             @Override
             protected LiveData<List<MovieVideo>> loadFromDB() {
-                return movieVideoDAO.getVideos(id);
+                return movieVideoDAO.getVideos(movieId);
             }
 
             @Override
             protected void saveCallResponse(MovieVideosRequest item) {
-                for (MovieVideo movieVideo : item.getVideos()) {
-                    movieVideo.setMovieId(id);
-                }
-                movieVideoDAO.deleteVideosOfMovie(id);
-                movieVideoDAO.insert(item.getVideos());
+                movieVideoDAO.updateData(item.getVideos(), movieId);
             }
 
             @Override
             protected LiveData<ApiResponse<MovieVideosRequest>> createCall() {
                 final MutableLiveData<ApiResponse<MovieVideosRequest>> apiResult = new MutableLiveData<>();
 
-                tmdbApi.getMovieVideos(id, AppSecret.API_KEY)
+                tmdbApi.getMovieVideos(movieId, AppSecret.API_KEY)
                         .enqueue(new Callback<MovieVideosRequest>() {
                             @Override
                             public void onResponse(Call<MovieVideosRequest> call, Response<MovieVideosRequest> response) {
@@ -171,11 +167,7 @@ public class MovieRepository {
 
             @Override
             protected void saveCallResponse(MovieReviewsRequest item) {
-                for (MovieReview review : item.getReviews()) {
-                    review.setMovieId(movieId);
-                }
-                movieReviewDAO.deleteAllReviews(movieId);
-                movieReviewDAO.insert(item.getReviews());
+                movieReviewDAO.updateData(item.getReviews(), movieId);
             }
 
             @Override
