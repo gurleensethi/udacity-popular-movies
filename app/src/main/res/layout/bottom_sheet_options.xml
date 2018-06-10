@@ -18,35 +18,38 @@
 
     <Button
         android:id="@+id/popularButton"
+        style="@style/OptionsSortButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
-        android:background="#29004f00"
-        android:foreground="?selectableItemBackground"
         android:text="@string/popular"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/topRatedButton"
         app:layout_constraintTop_toBottomOf="@id/sortLabel" />
 
     <Button
         android:id="@+id/topRatedButton"
+        style="@style/OptionsSortButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:background="#29004f00"
-        android:foreground="?selectableItemBackground"
         android:text="@string/top_rated"
-        android:textAllCaps="false"
-        android:textColor="@android:color/white"
-        android:textSize="16sp"
         app:layout_constraintLeft_toRightOf="@id/popularButton"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/popularButton" />
+
+    <Button
+        android:id="@+id/favouriteButton"
+        style="@style/OptionsSortButton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/favourite"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/popularButton" />
 
 </android.support.constraint.ConstraintLayout>

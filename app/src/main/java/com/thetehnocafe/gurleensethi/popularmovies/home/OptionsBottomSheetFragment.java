@@ -12,14 +12,23 @@ import android.widget.Button;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
 import com.thetehnocafe.gurleensethi.popularmovies.common.SortOption;
 
+import butterknife.BindInt;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class OptionsBottomSheetFragment extends BottomSheetDialogFragment {
 
     public interface ActionCallback {
         void onChangeSortOption(SortOption sortOption);
     }
 
-    private Button mPopularButton;
-    private Button mTopRatedButton;
+    @BindView(R.id.popularButton)
+    Button mPopularButton;
+    @BindView(R.id.topRatedButton)
+    Button mTopRatedButton;
+    @BindView(R.id.favouriteButton)
+    Button mFavouriteButton;
+
     private ActionCallback mActionCallback;
 
     public static OptionsBottomSheetFragment getInstance() {
@@ -35,9 +44,8 @@ public class OptionsBottomSheetFragment extends BottomSheetDialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
 
-        mPopularButton = view.findViewById(R.id.popularButton);
-        mTopRatedButton = view.findViewById(R.id.topRatedButton);
         initViews();
     }
 
@@ -45,22 +53,30 @@ public class OptionsBottomSheetFragment extends BottomSheetDialogFragment {
         mPopularButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mActionCallback != null) {
-                    mActionCallback.onChangeSortOption(SortOption.POPULAR);
-                }
-                dismiss();
+                selectOptionAndDismiss(SortOption.POPULAR);
             }
         });
 
         mTopRatedButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mActionCallback != null) {
-                    mActionCallback.onChangeSortOption(SortOption.TOP_RATED);
-                }
-                dismiss();
+                selectOptionAndDismiss(SortOption.TOP_RATED);
             }
         });
+
+        mFavouriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectOptionAndDismiss(SortOption.FAVOURITE);
+            }
+        });
+    }
+
+    private void selectOptionAndDismiss(SortOption sortOption) {
+        if (mActionCallback != null) {
+            mActionCallback.onChangeSortOption(sortOption);
+        }
+        dismiss();
     }
 
     public void addActionCallback(ActionCallback actionCallback) {

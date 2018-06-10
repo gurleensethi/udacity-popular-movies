@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.widget.TextView;
 
 import com.thetehnocafe.gurleensethi.popularmovies.Helpers;
 import com.thetehnocafe.gurleensethi.popularmovies.R;
@@ -28,6 +29,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 @SuppressWarnings({"ConstantConditions", "unchecked"})
 public class HomeFragment extends Fragment {
 
@@ -37,8 +41,13 @@ public class HomeFragment extends Fragment {
     private float MAX_FAB_TRANSLATION = 0;
     private static final int FAB_DP = 32;
 
-    private RecyclerView mMoviesRecyclerView;
-    private FloatingActionButton mOptionsFloatingActionButton;
+    @BindView(R.id.moviesRecyclerView)
+    RecyclerView mMoviesRecyclerView;
+    @BindView(R.id.optionsFloatingActionButton)
+    FloatingActionButton mOptionsFloatingActionButton;
+    @BindView(R.id.messageTextView)
+    TextView mMessageTextView;
+
     private MoviesRecyclerAdapter mMoviesRecyclerAdapter;
     private HomeViewModel mViewModel;
 
@@ -65,12 +74,17 @@ public class HomeFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        ButterKnife.bind(this, view);
+    }
+
     @SuppressWarnings("ConstantConditions")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mOptionsFloatingActionButton = getView().findViewById(R.id.optionsFloatingActionButton);
         mOptionsFloatingActionButton.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
             public boolean onPreDraw() {
@@ -82,8 +96,6 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-
-        mMoviesRecyclerView = getView().findViewById(R.id.moviesRecyclerView);
 
         configureRecyclerAdapter(getResources().getConfiguration().orientation);
 
@@ -136,10 +148,14 @@ public class HomeFragment extends Fragment {
                                 break;
                             }
                             case LOADING: {
+                                mMoviesRecyclerView.setVisibility(View.VISIBLE);
+                                mMessageTextView.setVisibility(View.GONE);
                                 mMoviesRecyclerAdapter.updateData(new ArrayList(Arrays.asList(null, null, null, null, null, null)));
                                 break;
                             }
                             case ERROR: {
+                                mMoviesRecyclerView.setVisibility(View.GONE);
+                                mMessageTextView.setVisibility(View.VISIBLE);
                                 break;
                             }
                         }

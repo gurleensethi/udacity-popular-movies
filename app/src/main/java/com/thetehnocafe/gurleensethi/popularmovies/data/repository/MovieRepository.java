@@ -52,12 +52,16 @@ public class MovieRepository {
 
             @Override
             protected boolean shouldFetch(List<Movie> movies) {
-                return true;
+                return sortOption != SortOption.FAVOURITE;
             }
 
             @Override
             protected LiveData<List<Movie>> loadFromDB() {
-                return movieDAO.getMovies();
+                if (sortOption == SortOption.FAVOURITE) {
+                    return movieDAO.getFavouriteMovies();
+                } else {
+                    return movieDAO.getMovies();
+                }
             }
 
             @Override

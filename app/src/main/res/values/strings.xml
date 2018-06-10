@@ -21,4 +21,5 @@
     <string name="share_trailer_content">What the trailer of \'%s\' on YouTube %s</string>
     <string name="favourite">Favourite</string>
     <string name="favourited">Favourited</string>
+    <string name="unable_to_get_movies">Unable to get movies :(</string>
 </resources>
