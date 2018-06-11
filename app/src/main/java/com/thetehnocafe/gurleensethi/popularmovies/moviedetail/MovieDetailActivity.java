@@ -123,8 +123,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         mReviewRecyclerAdapter.addActionListener(new ReviewsRecyclerAdapter.ActionListener() {
             @Override
             public void onReadMoreCLicked(MovieReview review) {
-                ReviewBottomSheetFragment fragment = ReviewBottomSheetFragment.getInstance(review);
-                fragment.show(getSupportFragmentManager(), TAG_REVIEW_BOTTOM_SHEET);
+                ReviewBottomSheetFragment dialog = new ReviewBottomSheetFragment.Builder()
+                        .setAuthorName(review.getAuthor())
+                        .setContent(review.getContent())
+                        .build();
+
+                dialog.show(getSupportFragmentManager(), TAG_REVIEW_BOTTOM_SHEET);
             }
         });
 

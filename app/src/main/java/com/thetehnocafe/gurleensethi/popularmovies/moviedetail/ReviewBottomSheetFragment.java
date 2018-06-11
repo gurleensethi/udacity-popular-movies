@@ -1,5 +1,6 @@
 package com.thetehnocafe.gurleensethi.popularmovies.moviedetail;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,13 +22,34 @@ public class ReviewBottomSheetFragment extends BottomSheetDialogFragment {
     private static final String ARGS_AUTHOR_NAME = "author_name";
     private static final String ARGS_CONTENT = "content";
 
-    public static ReviewBottomSheetFragment getInstance(MovieReview review) {
-        ReviewBottomSheetFragment fragment = new ReviewBottomSheetFragment();
+    public static class Builder {
+        private String authorName;
+        private String content;
+
+        public Builder setAuthorName(String authorName) {
+            this.authorName = authorName;
+            return this;
+        }
+
+        public Builder setContent(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public ReviewBottomSheetFragment build() {
+            return new ReviewBottomSheetFragment(this);
+        }
+    }
+
+    public ReviewBottomSheetFragment() {
+    }
+
+    @SuppressLint("ValidFragment")
+    public ReviewBottomSheetFragment(Builder builder) {
         Bundle args = new Bundle();
-        args.putString(ARGS_AUTHOR_NAME, review.getAuthor());
-        args.putString(ARGS_CONTENT, review.getContent());
-        fragment.setArguments(args);
-        return fragment;
+        args.putString(ARGS_AUTHOR_NAME, builder.authorName);
+        args.putString(ARGS_CONTENT, builder.content);
+        setArguments(args);
     }
 
     @BindView(R.id.authorNameTextView)

@@ -92,7 +92,6 @@ public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAd
             mPosterImageView = itemView.findViewById(R.id.movieImageView);
             mNameTextView = itemView.findViewById(R.id.nameTextView);
             mAverageVoteTextView = itemView.findViewById(R.id.averageRatingTextView);
-            itemView.setOnTouchListener(Helpers.buildAnimatedTouchListener(300));
         }
 
         void bindData(int position) {
