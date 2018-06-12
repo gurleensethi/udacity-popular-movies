@@ -19,6 +19,10 @@ import com.thetehnocafe.gurleensethi.popularmovies.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindInt;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAdapter.BaseViewHolder> {
 
     interface ActionCallback {
@@ -78,20 +82,21 @@ public class MoviesRecyclerAdapter extends RecyclerView.Adapter<MoviesRecyclerAd
 
     @SuppressLint("CheckResult")
     class ViewHolder extends BaseViewHolder implements View.OnClickListener {
-        private final ImageView mPosterImageView;
-        private final TextView mNameTextView;
-        private final TextView mAverageVoteTextView;
+        @BindView(R.id.movieImageView)
+        ImageView mPosterImageView;
+        @BindView(R.id.nameTextView)
+        TextView mNameTextView;
+        @BindView(R.id.averageRatingTextView)
+        TextView mAverageVoteTextView;
         private RequestOptions glideRequestOptions = new RequestOptions();
 
         ViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
+            ButterKnife.bind(this, itemView);
+            itemView.setOnTouchListener(Helpers.buildAnimatedTouchListener(300));
 
             glideRequestOptions.placeholder(R.drawable.ic_play_arrow_grey_24dp);
-
-            mPosterImageView = itemView.findViewById(R.id.movieImageView);
-            mNameTextView = itemView.findViewById(R.id.nameTextView);
-            mAverageVoteTextView = itemView.findViewById(R.id.averageRatingTextView);
         }
 
         void bindData(int position) {
